@@ -1,0 +1,28 @@
+{ "author": "Paul Serby <paul@serby.net>"
+, "name": "uber-cache-redis"
+, "description": "Redis Engine for uber-cache"
+, "version": "0.0.1"
+, "tags":
+  [ "cache"
+  , "memory"
+  ]
+, "repository":
+  { "type": "git"
+  , "url": "git@github.com:serby/uber-cache"
+  }
+, "main": "redisEngine.js"
+, "scripts":
+  { "test": "mocha -r should"
+  }
+, "engines":
+  { "node": ">0.6.0" }
+, "dependencies":
+  { "underscore": "*"
+  , "redis": "*"
+  }
+, "devDependencies":
+  { "mocha": "*"
+  , "should": "*"
+  , "uber-cache": "*"
+  }
+}
