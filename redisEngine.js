@@ -12,6 +12,8 @@ module.exports = function(options) {
   });
 
   handle.set = function(key, value, ttl, callback) {
+    var encoded;
+
     if (typeof ttl === 'function') {
       callback = ttl;
       ttl = undefined;
@@ -23,17 +25,39 @@ module.exports = function(options) {
       throw err;
     }
 
+    try {
+      encoded = JSON.stringify(value);
+    } catch (err) {
+      if (typeof callback === 'function') {
+        callback(err);
+      }
+      return;
+    }
+
     if ((typeof(ttl) === 'number') && (parseInt(ttl, 10) === ttl)) {
-      client.setex(key, ttl, value, callback);
+      client.setex(key, ttl, encoded, callback);
     } else {
-      client.set(key, value, callback);
+      client.set(key, encoded, callback);
     }
   };
 
   handle.get = function(key, callback) {
-    return client.get(key, function(err, value) {
-      if (value === null) {
+    return client.get(key, function(err, encoded) {
+      var value;
+
+      if (err) {
+        return callback(err);
+      }
+
+      if (encoded === null) {
         handle.emit('miss', key);
+        return callback(err, undefined);
+      }
+
+      try {
+        value = JSON.parse(encoded);
+      } catch (err) {
+        return callback(err);
       }
 
       callback(err, value);
