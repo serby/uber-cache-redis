@@ -1,4 +1,4 @@
-var _ = require('underscore')
+var _ = require('lodash')
   , EventEmitter = require('events').EventEmitter
   , redis = require('redis');
 

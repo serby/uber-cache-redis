@@ -1,4 +1,4 @@
-var _ = require('underscore')
+var _ = require('lodash')
   ;
 
 require('uber-cache/test/engine')('redisCacheEngine', function(options) {
