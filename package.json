@@ -1,7 +1,7 @@
 { "author": "Paul Serby <paul@serby.net>"
 , "name": "uber-cache-redis"
 , "description": "Redis Engine for uber-cache"
-, "version": "0.0.1"
+, "version": "0.1.0"
 , "tags":
   [ "cache"
   , "memory"
@@ -23,6 +23,6 @@
 , "devDependencies":
   { "mocha": "*"
   , "should": "*"
-  , "uber-cache": "*"
+  , "uber-cache": ">= 0.2.0"
   }
 }
