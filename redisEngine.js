@@ -1,15 +1,19 @@
-var _ = require('lodash')
-  , EventEmitter = require('events').EventEmitter
-  , redis = require('redis');
+var _ = require('lodash'),
+    EventEmitter = require('events').EventEmitter,
+    noop = function() {},
+    redis = require('redis');
 
 module.exports = function(options) {
 
-  var client = redis.createClient()
-    , handle = new EventEmitter();
+  var client = redis.createClient(),
+      handle = new EventEmitter();
 
   client.on('error', function(err) {
     handle.emit('error', err);
   });
+
+  handle.uberCacheVersion = '1';
+  handle.staleDisabled = true;
 
   handle.set = function(key, value, ttl, callback) {
     var encoded;
@@ -21,15 +25,17 @@ module.exports = function(options) {
 
     if (typeof key === 'undefined') {
       var err = new Error('Invalid key undefined');
-      handle.emit('error', err);
-      throw err;
+      if (typeof callback === 'function') {
+        callback(err);
+      }
+      return;
     }
 
     try {
       encoded = JSON.stringify(value);
-    } catch (err) {
+    } catch (e) {
       if (typeof callback === 'function') {
-        callback(err);
+        callback(e);
       }
       return;
     }
@@ -50,14 +56,16 @@ module.exports = function(options) {
       }
 
       if (encoded === null) {
+        callback(err);
         handle.emit('miss', key);
-        return callback(err, undefined);
+        return;
       }
 
       try {
         value = JSON.parse(encoded);
-      } catch (err) {
-        return callback(err);
+      } catch (e) {
+        callback(e);
+        return;
       }
 
       callback(err, value);
@@ -68,8 +76,8 @@ module.exports = function(options) {
     client.del(key, callback);
   };
 
-  handle.clear = function() {
-    client.flushdb();
+  handle.clear = function(callback) {
+    client.flushdb(callback);
   };
 
   handle.size = function(callback) {
