@@ -1,6 +1,6 @@
 # Redis engine for Uber Cache
 
-[![build status](https://secure.travis-ci.org/serby/uber-cache-redis.png)](http://travis-ci.org/serby/uber-cache-redis)
+[![build status](https://secure.travis-ci.org/serby/uber-cache-redis.png)](http://travis-ci.org/serby/uber-cache-redis) [![Greenkeeper badge](https://badges.greenkeeper.io/serby/uber-cache-redis.svg)](https://greenkeeper.io/)
 
 ## Installation
 
