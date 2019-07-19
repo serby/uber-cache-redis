@@ -17,7 +17,7 @@
 , "engines":
   { "node": ">0.6.0" }
 , "dependencies":
-  { "lodash": "*"
+  { "lodash": ">=4.17.15"
   , "redis": "*"
   }
 , "devDependencies":
