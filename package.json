@@ -18,7 +18,7 @@
   { "node": ">0.6.0" }
 , "dependencies":
   { "lodash": "*"
-  , "redis": "*"
+  , "redis": ">=3.0.0"
   }
 , "devDependencies":
   { "mocha": "*"
