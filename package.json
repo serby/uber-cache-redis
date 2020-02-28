@@ -21,7 +21,7 @@
   , "redis": "*"
   }
 , "devDependencies":
-  { "mocha": "*"
+  { "mocha": ">=7.1.0"
   , "async": "*"
   , "should": "*"
   , "uber-cache": ">= 0.2.0"
